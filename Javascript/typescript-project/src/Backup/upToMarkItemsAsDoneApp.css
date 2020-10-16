@@ -1,0 +1,140 @@
+import React, { useState } from 'react';
+import './App.css';
+
+
+
+  interface ItemProps {
+    name?: string
+    del: () => void
+  }
+
+
+  function ShoppingListItem({ name, del }: ItemProps) {
+    if (!name) {
+      return null
+    }
+    return <li>
+    
+      {
+        // Name
+        // <s> or <del> is strikethrough
+      }
+    
+    
+      {name}
+    
+      {
+        // Delete button
+      }
+      <button
+        onClick={() => {
+          del()
+        }}>
+        Delete
+    </button>
+    
+      {
+        // Checkbox
+      }
+      <input type="checkbox" id={name} name={name} value={name} />
+      <label htmlFor={name}>{name}</label><br />
+    </li>
+  }
+
+
+  interface ListProps {
+    items: string[]
+    setItems: (input: string[]) => void
+  }
+
+
+
+  function ShoppingList(props: ListProps) {
+    return <ul className="shopping-list">
+      {props.items.map(function (name: string) {
+        return <ShoppingListItem
+          key={name}
+          name={name}
+          del={() => {
+            const updatedArray = props.items.filter((val) => {
+              return name !== val
+            })
+            props.setItems(updatedArray)
+          }}
+          
+        />
+      })}
+    
+    
+    
+    </ul>
+  }
+
+
+
+
+
+  function App() {
+    {
+      // Define our state holding variables
+    }
+    
+    const [items, setItems] = useState<string[]>(["milk", "coffee", "gts3090"])
+    const [newItem, setNewItem] = useState<string>("")
+    
+  
+    {
+        // Begin main app
+    }
+    return (
+      <div id="app">
+        <h1>Shopping List</h1>
+
+        <input value={newItem} onChange={function (e: React.ChangeEvent<HTMLInputElement>) {
+          setNewItem(e.currentTarget.value);
+        }} />
+
+        <button onClick={() => {
+          setItems([...items, newItem])
+          setNewItem("")
+        }}>add</button>
+
+        <ShoppingList items={items} setItems={setItems} />
+      
+      </div>
+    );
+  }
+
+  export default App;
+
+{
+  /*
+class CheckBox extends React.Component{
+    constructor() {
+      super()
+      this.state = {isChecked: false};
+      this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
+    }
+  
+    handleChecked () {
+      this.setState({isChecked: !this.state.isChecked});
+    }
+  
+    render(){
+      var txt;
+      if (this.state.isChecked) {
+        txt = 'checked'
+      } else {
+        txt = 'unchecked'
+      }
+  
+  // remove () after handleChecked because you need pass 
+  // reference to function
+  // also add return before <div>
+  return <div>
+    <input type="checkbox" onChange={this.handleChecked} />
+    <p>This box is {txt}</p>
+  </div>
+    
+    */
+}
