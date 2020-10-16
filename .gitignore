@@ -1,4 +1,4 @@
-day4
-docker
-imagemad
-postgresql
+docker/
+imagemad/
+postgresql/
+/home/aaron/Projects/Javascript/typescript-project/node_modules/

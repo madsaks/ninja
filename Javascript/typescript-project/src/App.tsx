@@ -4,7 +4,7 @@ import './App.css';
 
 
   interface ItemProps {
-    // name?: string
+    name?: string
     setItem: (item: IItem) => void
     item: IItem
     del: () => void
@@ -20,30 +20,26 @@ import './App.css';
     }
     return (
       <li >
-        <span>
-          
-        {item.checked ? <s>{item.name}</s> : item.name }
-       </span>
         {/* Item name */}
-          
+        <span>
+          {item.checked ? <s>{item.name}</s> : item.name }
+        </span>
+        
         {/* Delete button */}
         <span>
-
-        <button
-          onClick={() => { del() }}>Delete
-        </button>
-      
-        
-        {/* Need to add item.checked function */}
-        <input type="checkbox" checked={item.checked} onChange={() => {
-          setItem({
-            ...item,
-            checked: !item.checked
-          })
-        }}/>
+          <button
+            onClick={() => { del() }}>Delete
+          </button>
+          {/* Need to add item.checked function */}
+          <input type="checkbox" checked={item.checked} onChange={() => {
+            setItem({
+              ...item,
+              checked: !item.checked
+            })
+          }}/>
         </span>
-
-      </li>)}
+      </li>)
+  }
 
 
   interface ListProps {
@@ -87,34 +83,62 @@ interface IItem {
 }
 
 interface ISList {
+  
   setItems: (value: IItem[] ) => void
   setNewItem: (value: string) => void
   newItem: string
   items: IItem[]
 }
 
+interface TabProps{
+  setActiveTab: (value: ISList[]) => void
+  getNewList: (value: ISList) => void
+  tabIndex?: BigInt
+  tabData?: ISList[]
+}
 
-function SList(props : ISList) {
 
-  return(
-    <div className="flexbox" id="app">
-          <div className="shoppingList">
-            <h1>Shopping List</h1>
-            <div className="input-wrap">
+function SList(props : TabProps) {
 
-            <input className="textInput" value={props.newItem} onChange={(e) =>  {
-              props.setNewItem(e.currentTarget.value);
+  return (
+    // Need code to replicate SList in the same way that shopping list was
+    // {items.map(function (item: IItem) {
+    //   return <ShoppingListItem
+    //     // key={name}
+    //     item={item}
+    //     setItem={(newItem: IItem) => {
+    //       const index = items.indexOf(item)
+    //       let newItems = [...items]
+    //       newItems[index] = newItem
+    //       setItems(newItems)
+    //     }}
+    //     del={() => {
+    //       const updatedArray = props.items.filter((val) => {
+    //         return item !== val
+    //       })
+    //     props.setItems(updatedArray)
+    //     }}        
+    
+    props.tabData?.map(function (tab: TabProps)) {
+      <div className="flexbox" id="app">
+        <div className="shoppingList">
+          <h1>Shopping List</h1>
+          <div className="input-wrap">
+
+            <input className="textInput" value={props.tabData.newItem} onChange={(e) => {
+              props.tabData.setNewItem(e.currentTarget.value);
             }} />
 
-          <button className="deleteButton" onClick={() => {
-            // Changed as it was passing function instead of array
-            props.setItems([...props.items, { name: props.newItem, checked: false }])
+            <button className="deleteButton" onClick={() => {
+              // Changed as it was passing function instead of array
+              props.tabData.setItems([...props.tabData.items, { name: props.tabData.newItem, checked: false }])
             }}>Add</button>
-            </div>
-
-            <ShoppingList items={props.items} setItems={props.setItems} />
           </div>
-    </div>
+
+          <ShoppingList items={props.tabData.items} setItems={props.tabData.setItems} />
+        </div>
+      </div>
+  }
   )
 }
 
@@ -128,10 +152,9 @@ function App() {
     { name: "Milk", checked: false },
     { name: "Cheese", checked: false }
   ])
-  const [list, setActiveList] = useState<ISList[]>()
+  const [list, setActiveTab] = useState<ISList[]>()
   const [newList, getNewList] = useState<ISList>()
 
-  // setList(list) => void
   
     
     // Begin main app
@@ -141,14 +164,7 @@ function App() {
       
 
       {/* Default one list */}
-      {
-        defaultList = getNewList([
-          setItems(value: IItem[] ),
-          setNewItem(value: string),
-          newItem,
-          items
-        ])
-      }
+      
       
     
         
