@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import "./App.css"
+
+
+const upperFirst = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 
 interface List {
   name: string;
@@ -27,19 +33,25 @@ const List = (props: ListProps) => {
   
   
   const itemDelHandler = (name: string) => {
-    console.log("itemDelHandler called");
-
-    // Copies state into temp state
-    const tempState = props.state.map((l) => { return l });
-    // find index of list with name matching activeTab
-    const i = tempState.findIndex((i) => { return i.name === props.activeTab })
+    console.log("itemDelHandler called")
     
-    // need map function
-    const temp = tempState[i].items.filter(
-      (item) => {
-        item.name != name;
-
-      })
+    
+    // Copies state into temp state
+    const tempState = props.state.map((el) => {
+      if (el.name !== props.activeTab)
+        return el
+    
+      const templist = el.items.filter(
+        (item: any) => {
+          return item.name !== name;
+        }
+      );
+        
+      return {
+        name: el.name,
+        items: templist
+      }
+    })
     
     props.setState(tempState)
 
@@ -62,20 +74,28 @@ const List = (props: ListProps) => {
     
   }
   return (
-    <div>
+    <div className="w3-container">
       {props.activeList.items.map((el) => {
         
         let item: any;
-        el.checked ? item = <s>{el.name}</s> : item = el.name
+        let upperCase = upperFirst(el.name)
+        el.checked ? item = <s>{upperCase}</s> : item = upperCase
       
         
         return (
-          <li>
-            {item}
-            {/* If eventhandler onChange used then this is run on all lists */}
-            <input type="checkbox" checked={el.checked} onClick={() => { checkHandler(el.name) }} />
-            <button onClick={() => { itemDelHandler(el.name) }}>Del</button>
-          </li>
+          
+            <li>
+              <h3>{item}</h3>
+
+              {/* If eventhandler onChange used then this is run on all lists */}
+              <input type="checkbox" checked={el.checked} onClick={() => { checkHandler(el.name) }} />
+              <button  onClick={() => { itemDelHandler(el.name) }}>
+                <i className="material-icons">delete</i>
+            </button>
+            <br />
+            </li>
+            
+          
         );
       })}
     </div>
@@ -87,15 +107,16 @@ const App = () => {
   // get checked items name
   const [isChecked, setChecked] = useState<boolean>(false);
   const [newList, setNewList] = useState<string>("New Tab");
-  const [activeTab, setActiveTab] = useState<string>("List 1");
+  // If default activelist not set then redering fails
+  const [activeTab, setActiveTab] = useState<string>("Groceries");
   const [newItem, setNewItem] = useState<string>("");
   const [state, setState] = useState<List[]>([
     {
-      name: "List 1",
+      name: "Groceries",
       items: [{ name: "milk", checked: false }]
     },
     {
-      name: "List 2",
+      name: "Drinks",
       items: [{ name: "bread", checked: true }]
     }
   ]);
@@ -113,7 +134,7 @@ const App = () => {
     setState(newState);
   };
   if (!activeList) {
-    return <div>No list</div>;
+    return <div><h2>Can't find default list!</h2>></div>;
   }
 
   // Take (item) and add to current list (activeList)
@@ -153,16 +174,20 @@ const App = () => {
       />
       <button onClick={addListToState}>New List</button>
 
+      <div className="w3-padding w3-xlarge w3-teal">
       <h1>{activeList.name}</h1>
 
-      {/* Add new Item to list */}
+        {/* Add new Item to list */}
+      <div className="addItem">
       <input
         type="text"
         onChange={(e) => {
           setNewItem(e.currentTarget.value);
         }}
       />
-      <button onClick={addNewListItem}>add</button>
+      <button className="w3-btn w3-orange" onClick={addNewListItem}>add</button>
+        </div>
+        </div>
 
       {/* Begin List */}
       <ul>
