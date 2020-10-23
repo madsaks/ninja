@@ -55,6 +55,9 @@ function ShoppingList(props: ListProps) {
     return (
       <ul className="shopping-list">
         {items.map(function (item: IItem) {
+          
+          // <ShoppingListItem item=IItem setItem=(IItem) => {} del=() =>
+          
           return <ShoppingListItem
             // key={name}
             item={item}
@@ -98,9 +101,8 @@ interface TabProps{
 }
 
 
-function SList(props : TabProps) {
+function SList(props : ISList) {
 
-  return (
     // Need code to replicate SList in the same way that shopping list was
     // {items.map(function (item: IItem) {
     //   return <ShoppingListItem
@@ -119,28 +121,32 @@ function SList(props : TabProps) {
     //     props.setItems(updatedArray)
     //     }}        
     
-    props.tabData?.map(function (tab: TabProps)) {
+    return (
+      
+      
+      
+      
+      
       <div className="flexbox" id="app">
-        <div className="shoppingList">
-          <h1>Shopping List</h1>
-          <div className="input-wrap">
-
-            <input className="textInput" value={props.tabData.newItem} onChange={(e) => {
-              props.tabData.setNewItem(e.currentTarget.value);
-            }} />
-
+            <div className="shoppingList">
+              <h1>Shopping List</h1>
+              <div className="input-wrap">
+  
+              <input className="textInput" value={props.newItem} onChange={(e) =>  {
+                props.setNewItem(e.currentTarget.value);
+              }} />
+  
             <button className="deleteButton" onClick={() => {
               // Changed as it was passing function instead of array
-              props.tabData.setItems([...props.tabData.items, { name: props.tabData.newItem, checked: false }])
-            }}>Add</button>
-          </div>
-
-          <ShoppingList items={props.tabData.items} setItems={props.tabData.setItems} />
-        </div>
+              props.setItems([...props.items, { name: props.newItem, checked: false }])
+              }}>Add</button>
+              </div>
+  
+              <ShoppingList items={props.items} setItems={props.setItems} />
+            </div>
       </div>
-  }
-  )
-}
+    )}
+
 
 function App() {
   //  Define our state holding variables
@@ -164,13 +170,24 @@ function App() {
       
 
       {/* Default one list */}
+      <button>List 1</button>
+      <button>List 2</button>
+      <button>List 3</button>
       
-      
+      const List1: ISList = {
+        setItems: setItems(),
+      set
+      } 
+
+      <SList setItems={List1.setItems} setNewItem={List1.setNewItem} newItem={List1.newItem} items={List1.items} />
     
         
       {/* <button onClick={setList}></button> */}
-      <SList setItems={setItems} setNewItem={setNewItem} newItem={newItem} items={items} />
-      <SList setItems={setItems} setNewItem={setNewItem} newItem={newItem} items={items} />
+
+      
+      
+
+      
 
       
     </div>

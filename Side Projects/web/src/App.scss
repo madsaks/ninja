@@ -1,0 +1,159 @@
+@use "sass:color";
+
+
+
+// Temporary development tags
+.tempPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+// Colour Palettes
+// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=00796B&secondary.color=64FFDA
+// TODO - Use SCSS colour math to calculate based on primaries for easy colour theming
+
+// Primary palette
+$Primary: #EC407A;
+$P-Light: #FF77A9;
+$P-Dark: #B4004E;
+
+// Secondary palette
+$Secondary: #64FFDA;
+$S-Light: #9EFFFF;
+$S-Dark: #14CBA8;
+
+// Text on Primary
+$Text-P: #FFFFFF;
+$Text-S: #000000;
+
+
+
+
+
+
+
+/* Material Design Icons - Style sheet included in <head> */
+/* Rules for using icons as white on a dark background. */
+
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 0.7);
+  // padding: 20px,20px,20px,20px;
+  margin: 10px;
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+}
+}
+
+/* Default Sizing */
+.material-icons.md-48 {
+  font-size: 42px;
+}
+
+
+
+
+
+.root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: lighten($P-Light, 50%);
+}
+
+.App {
+  height: 100%;
+  width: 100%;
+}
+
+
+
+// Top Bar Styles
+.TopBar {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex: 0 0 100%;
+  height: 60px;
+  width: 100%;
+  position:top;
+  background-color: $P-Dark
+}
+
+.TBCenter {
+  display: flex;
+  height: auto;
+  width:auto;
+
+}
+
+.TBLeft {
+  display: flex;
+  justify-content: left;
+}
+
+.TBRight {
+  display: flex;
+  justify-content: right;
+}
+  
+
+// The sidebar menu-------------------------------
+.SideBar {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 100% Full-height */
+  // toggle show for development
+  width: 15%; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: $P-Light; /* Black*/
+  overflow-x: auto; /* Disable horizontal scroll */
+  padding-top: 10px;/* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  
+}
+
+// NavList Class contains all navigation buttons
+.NavList {
+  display: flex;
+  flex-direction: column;
+  color: $Text-S;
+  background-color: $P-Light;
+}
+
+// NavBtn class is for individual buttons
+.NavBtn {
+  border: none;
+  color: $Text-P;
+  size: 24pt;
+  background-color: $P-Light;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  &:hover {
+    
+    background: lighten($P-Light, 30%)
+  
+  }
+}
+// Some extra button classes we can use later
+// .success {color: green;}
+// .info {color: dodgerblue;}
+// .warning {color: orange;}
+// .danger {color: red;}
+// .default {color: black;}
+
+
+// Question Mockup
+.image {
+  display:flex;
+  justify-content: center;
+  align-content: flex-start;
+  max-width: 70%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
